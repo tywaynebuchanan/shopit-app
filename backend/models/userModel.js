@@ -41,9 +41,9 @@ const userSchema = mongoose.Schema({
         default: 'user'
     },
     user:{
-        type: mongoose.Schema.ObjectId,
-        ref:'User',
-        // required:true
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'user',
+        required:true
 
     },
     resetPasswordToken: String,

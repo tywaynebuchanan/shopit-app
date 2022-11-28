@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoutes");
+const orderRoute = require("./routes/orderRoute");
 const DB = require('../backend/database/dbconfig');
 var cookieParser = require('cookie-parser')
 const AppErrorMiddleware = require('./middleware/errors');
@@ -27,6 +28,7 @@ app.get("/",(req,res)=>{
 //Routes
 app.use("/api/v1",productRoute);
 app.use("/api/v1",userRoute);
+app.use("/api/v1",orderRoute);
 
 //Middleware to handle errors
 app.use(AppErrorMiddleware);
