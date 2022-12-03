@@ -5,7 +5,11 @@ const JWT = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const userSchema = mongoose.Schema({
-
+    name: {
+        type: String,
+        required: [true, "A name is required"],
+        unique: true
+    },
     email: {
         type: String,
         required: [true, "A user name is required"],
@@ -14,11 +18,6 @@ const userSchema = mongoose.Schema({
         validate: [validator.isEmail,"Please enter a valid email address"]
     },
 
-    name: {
-        type: String,
-        required: [true, "A name is required"],
-        unique: true
-    },
 
     password: {
         type: String,
@@ -28,10 +27,6 @@ const userSchema = mongoose.Schema({
 
 
     },
-    // conpassword:{
-    //     type: String,
-    //     required: [true,"You need to confirm your password"]
-    // },
     avatar:{
         type: String,
         default:'image'
@@ -40,12 +35,12 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'user'
     },
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'user',
-        required:true
+    // user:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref:'users-shop-it',
+    //     required:true
 
-    },
+    // },
     resetPasswordToken: String,
     resetPasswordExpires: Date
 
@@ -83,5 +78,5 @@ userSchema.methods.generatePasswordResetToken = function(){
     this.resetPasswordExpires = Date.now() + 30 * 60 * 1000;
     return resetToken;
 }
-const User = mongoose.model("users-shop-it",userSchema);
-module.exports = User;
+
+module.exports = mongoose.model("User",userSchema);

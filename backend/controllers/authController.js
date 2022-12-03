@@ -5,20 +5,20 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require('crypto');
 
-exports.createUser = catchAsync(async (req,res,next)=>{
-    const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        // conpassword: req.body.conpassword
+exports.registerUser = catchAsync(async (req,res,next)=>{
+    const {name,email,password} = req.body;
+
+    const user = await User.create({
+        name,
+        email,
+        password,
     })
 
-    if(!newUser){
-        return next(new AppError("Unable to add user",401));
-    }
-
-    //Assign Token
-    sendToken(user,200,res);
+    res.status(200).json({
+        status: "success",
+        message: "The user has been added",
+        data: {user}
+    })
 })
 
 exports.loginUser = catchAsync(async(req,res,next)=>{

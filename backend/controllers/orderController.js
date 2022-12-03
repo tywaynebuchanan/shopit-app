@@ -87,3 +87,42 @@ exports.myOrders = catchAsync(async(req,res,next)=>{
 
     })
 })
+
+// exports.getstock = catchAsync(async(req,res,next)=>{
+//     const stock = await Product.findById(req.params.id);
+
+//     res.status(200).json({
+//         status: "success",
+//         stock: stock.stock
+//     })
+// })
+
+exports.updateOrder = catchAsync(async(req,res,next)=>{
+    const order = await Order.findById(req.params.id);
+
+    if(order.orderStatus === "Delivered"){
+        return next(new AppError("The order was already delievered"));
+    }
+
+    order.orderItems.forEach(async item =>{
+        await updateStock(item.product,item.quantity)
+    })
+
+    order.orderStatus = req.body.status;
+    order.deliveredAt = Date.now();
+
+    await order.save();
+
+    res.status(200).json({
+        status:"success",
+        message: "The order details have been updated"
+    })
+})
+
+async function updateStock(id,quantity){
+    const product = await Product.findById(id);
+
+    product.stock = product.stock - quantity;
+
+    await product.save({validateBeforeSave: false});
+}

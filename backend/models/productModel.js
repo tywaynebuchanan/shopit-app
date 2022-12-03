@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
+const productSchema = new mongoose.Schema({
 
     name:{
         type:String,
@@ -53,6 +53,7 @@ const productSchema = mongoose.Schema({
                 'Food',
                 'Books',
                 'Shoes',
+                'Uniform'
             ],
             message: 'Please select the correct category for the product'
         }
@@ -94,7 +95,12 @@ const productSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
-    }
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
 })
 
 const Product = mongoose.model('products',productSchema);

@@ -7,8 +7,7 @@ const router = express.Router();
 //Admin Routes
 router.route("/admin/users").get(auth.isAuthenicated,auth.authorizedRoles('admin'),
 authController.getAllUsers);
-router.route('/admin/createuser').post(auth.isAuthenicated,auth.authorizedRoles('admin'),
-authController.createUser);
+router.route('/register').post(authController.registerUser);
 router.route("/admin/user/:id").get(auth.isAuthenicated,auth.authorizedRoles('admin'),
 authController.getUserDetails);
 router.route("/admin/update/:id").put(auth.isAuthenicated,auth.authorizedRoles('admin'),
