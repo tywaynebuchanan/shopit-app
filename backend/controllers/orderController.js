@@ -126,3 +126,18 @@ async function updateStock(id,quantity){
 
     await product.save({validateBeforeSave: false});
 }
+
+exports.deleteorder = catchAsync(async(req,res,next)=>{
+    const deleteOrder = await Order.findById(req.params.id);
+
+    if(!deleteOrder){
+        return next(new AppError("We are unable to find the order by that id",400))
+    }
+
+    await deleteOrder.remove();
+
+    res.status(200).json({
+        status: "success",
+        message: "The order was deleted"
+    })
+})

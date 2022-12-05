@@ -16,4 +16,13 @@ router.route('/product/:id').post(auth.isAuthenicated,productController.getProdu
 router.route('/deleteproduct/:id').delete(auth.isAuthenicated,auth.authorizedRoles('admin'),
 productController.deleteProduct);
 
+router.route('/review/add/:id')
+.put(auth.isAuthenicated,productController.addreview);
+
+router.route('/reviews')
+.get(auth.isAuthenicated,auth.authorizedRoles('admin'),productController.getallreviews)
+
+// router.route('/reviews/delete')
+// .delete(auth.isAuthenicated,auth.authorizedRoles('admin'),productController.deletereview);
+
 module.exports = router;

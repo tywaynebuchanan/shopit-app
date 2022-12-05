@@ -16,7 +16,10 @@ router.route("/order/me")
 .get(isAuthenicated,authorizedRoles('user'),orderController.myOrders);
 
 router.route("/order/:id")
-.get(isAuthenicated,authorizedRoles('admin'),orderController.updateOrder);
+.put(isAuthenicated,authorizedRoles('admin'),orderController.updateOrder);
+
+router.route("/order/delete/:id")
+.delete(isAuthenicated,authorizedRoles('admin'),orderController.deleteorder);
 
 // router.route("/getstock/:id").get(orderController.getstock)
 
