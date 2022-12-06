@@ -12,33 +12,33 @@ exports.getProducts = catchAsync(async (req,res,next) =>{
         .filter()
         .pagination(resPerPage);
 
-        const allProducts = await apiFeatures.query;
+        const products = await apiFeatures.query;
 
-        if(!allProducts){
+        if(!products){
             return next(new AppError('Unable to get all products',401));
         }
-        res.status(200).json({
-            status: "success",
-            products: allProducts.length,
-            productCount: productCount,
-            data:{
-                allProducts
-            }
-        })
+
+        setTimeout(()=>{
+            res.status(200).json({
+                status: "success",
+                productCount: productCount,
+                products
+                
+            })
+        },2000)
+        
    
 })
 
 exports.getProductById = catchAsync(async (req,res,next)=>{
     
-        const getProductById = await Product.findById(req.params.id);
-        if(!getProductById){
+        const product = await Product.findById(req.params.id);
+        if(!product){
             return next(new AppError("Unable to get the product by that Id",404))
         }
         res.status(200).json({
             status: "success",
-            data:{
-                getProductById
-            }
+            product
         })
   
         

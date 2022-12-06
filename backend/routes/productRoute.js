@@ -6,12 +6,9 @@ const router = express.Router();
 router.route('/createproduct')
 .post(auth.isAuthenicated,auth.authorizedRoles('admin'),productController.createProduct)
 
-router.route('/products').get
-(auth.isAuthenicated,auth.authorizedRoles('admin'),
-productController.getProducts
-);
+router.route('/products').get(productController.getProducts);
 
-router.route('/product/:id').post(auth.isAuthenicated,productController.getProductById);
+router.route('/product/:id').post(productController.getProductById);
 
 router.route('/deleteproduct/:id').delete(auth.isAuthenicated,auth.authorizedRoles('admin'),
 productController.deleteProduct);
